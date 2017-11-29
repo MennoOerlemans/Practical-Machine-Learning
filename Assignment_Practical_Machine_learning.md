@@ -51,7 +51,7 @@ downloaddatum <- Sys.Date()
 print(downloaddatum)
 ```
 
-    ## [1] "2017-11-28"
+    ## [1] "2017-11-29"
 
 Defining a train, test and validation set (originally the test set)
 -------------------------------------------------------------------
@@ -71,7 +71,7 @@ dim(train)
 dim(test)
 ```
 
-    ## [1] 4092   52
+    ## [1] 4102   52
 
 Training the models
 -------------------
@@ -81,6 +81,18 @@ set.seed(1)
 mod_rf <- train(classe ~ ., data = train, method = "rf")
 mod_gbm <- train(classe ~ ., data = train, method = "gbm")
 mod_lda <- train(classe ~ ., data = train, method = "lda")
+```
+
+    ## Loading required package: MASS
+
+    ## 
+    ## Attaching package: 'MASS'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     select
+
+``` r
 mod_dt <- rpart(classe ~ ., data = train, method="class")
 ```
 
@@ -91,7 +103,9 @@ Print the Decision tree model
 fancyRpartPlot(mod_dt)
 ```
 
-![](Assignment_Practical_Machine_learning_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
+    ## Warning: labs do not fit even at cex 0.15, there may be some overplotting
+
+![](Figure/unnamed-chunk-4-1.png)
 
 Testing the models and selecting the best model
 -----------------------------------------------
@@ -112,22 +126,22 @@ confusionMatrix(pred_rf, test$classe)$overall[1]
 confusionMatrix(pred_gbm, test$classe)$overall[1]
 ```
 
-    ## Accuracy 
-    ## 0.976784
+    ##  Accuracy 
+    ## 0.9748903
 
 ``` r
 confusionMatrix(pred_lda, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.6908602
+    ## 0.6923452
 
 ``` r
 confusionMatrix(pred_dt, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.6911046
+    ## 0.7181863
 
 Prediction on the validation set
 --------------------------------

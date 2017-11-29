@@ -5,6 +5,10 @@ date: "27 november 2017"
 output: github_document
 ---
 
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.path='Figure/')
+```
+
 ```{r setup, include=FALSE}
 library(lubridate)
 library(dplyr)
