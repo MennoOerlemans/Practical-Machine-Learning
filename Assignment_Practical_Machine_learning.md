@@ -56,6 +56,8 @@ print(downloaddatum)
 Defining a train, test and validation set (originally the test set)
 -------------------------------------------------------------------
 
+The train set is split into a training and test set to see how good the models are. The trainingset is 70% of the original training set.
+
 ``` r
 # building a validation, test and train set
 validation <- test
@@ -71,28 +73,18 @@ dim(train)
 dim(test)
 ```
 
-    ## [1] 4102   52
+    ## [1] 4112   52
 
 Training the models
 -------------------
+
+Four models are build: random forest, boosted trees ("gbm") and linear discriminant analysis ("lda") model and decision tree.
 
 ``` r
 set.seed(1)
 mod_rf <- train(classe ~ ., data = train, method = "rf")
 mod_gbm <- train(classe ~ ., data = train, method = "gbm")
 mod_lda <- train(classe ~ ., data = train, method = "lda")
-```
-
-    ## Loading required package: MASS
-
-    ## 
-    ## Attaching package: 'MASS'
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     select
-
-``` r
 mod_dt <- rpart(classe ~ ., data = train, method="class")
 ```
 
@@ -109,6 +101,8 @@ fancyRpartPlot(mod_dt)
 
 Testing the models and selecting the best model
 -----------------------------------------------
+
+The testset is used to compare the results of the different models. Of each model the comparison against the classes in the testset is defined and the acuracy is printed.The acuracy of the random forest model is the highest.
 
 ``` r
 pred_rf <- predict(mod_rf, test)
@@ -127,24 +121,26 @@ confusionMatrix(pred_gbm, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.9748903
+    ## 0.9754377
 
 ``` r
 confusionMatrix(pred_lda, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.6923452
+    ## 0.6884728
 
 ``` r
 confusionMatrix(pred_dt, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.7181863
+    ## 0.7361381
 
 Prediction on the validation set
 --------------------------------
+
+The Random Forest model is used to predict the values of the validation set (originally the test set).
 
 ``` r
 pred_rf_val <- predict(mod_rf, validation)
