@@ -51,7 +51,7 @@ downloaddatum <- Sys.Date()
 print(downloaddatum)
 ```
 
-    ## [1] "2017-11-29"
+    ## [1] "2017-12-05"
 
 Defining a train, test and validation set (originally the test set)
 -------------------------------------------------------------------
@@ -73,7 +73,7 @@ dim(train)
 dim(test)
 ```
 
-    ## [1] 4112   52
+    ## [1] 4110   52
 
 Training the models
 -------------------
@@ -94,8 +94,6 @@ Print the Decision tree model
 ``` r
 fancyRpartPlot(mod_dt)
 ```
-
-    ## Warning: labs do not fit even at cex 0.15, there may be some overplotting
 
 ![](Figure/unnamed-chunk-4-1.png)
 
@@ -121,21 +119,35 @@ confusionMatrix(pred_gbm, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.9754377
+    ## 0.9742092
 
 ``` r
 confusionMatrix(pred_lda, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.6884728
+    ## 0.6919708
 
 ``` r
 confusionMatrix(pred_dt, test$classe)$overall[1]
 ```
 
     ##  Accuracy 
-    ## 0.7361381
+    ## 0.6776156
+
+Cross Validation
+----------------
+
+The cross-validation set (read the test which was the result of partitioning the trainingset) is used to compare the predictions from the models against the outcome classe in the testset data.
+
+The accuracy of the first model, the random forest model, is 1. This means that all the cases in the testset were predicted well (100% accuracy).
+
+Out of sample error
+-------------------
+
+The out of sample error is the error in the testset when predicting the outcome based on the choosen model. In this case the Random Forest Model is the best predictor (this is 100% minus the good predictions squared).
+
+If the accuracy of the model is 100%, it means that the numbers of wrong prediction is 0%. This means that the out of sample error is 0.
 
 Prediction on the validation set
 --------------------------------
@@ -149,3 +161,5 @@ pred_rf_val
 
     ##  [1] B A B A A E D B A A B C B A E E A B B B
     ## Levels: A B C D E
+
+After entering the outcome in the quiz, all the cases were well predicted.

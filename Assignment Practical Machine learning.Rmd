@@ -2,7 +2,7 @@
 title: "Practical Machine learning assignment"
 author: "Menno Oerlemans"
 date: "27 november 2017"
-output: github_document
+output: html_document
 ---
 
 ```{r global_options, include=FALSE}
@@ -127,6 +127,20 @@ confusionMatrix(pred_lda, test$classe)$overall[1]
 confusionMatrix(pred_dt, test$classe)$overall[1]
 ```
 
+## Cross Validation
+
+The cross-validation set (read the test which was the result of partitioning the trainingset) is used to compare the predictions from the models against the outcome classe in the testset data. 
+
+The accuracy of the first model, the random forest model, is 1. This means that all the cases in the testset were predicted well (100% accuracy).
+
+
+## Out of sample error
+
+The out of sample error is the error in the testset when predicting the outcome based on the choosen model. In this case the Random Forest Model is the best predictor (this is 100% minus the good predictions squared).
+
+If the accuracy of the model is 100%, it means that the numbers of wrong prediction is 0%. This means that the out of sample error is 0.
+
+
 ## Prediction on the validation set
 
 The Random Forest model is used to predict the values of the validation set (originally the test set). 
@@ -135,3 +149,5 @@ The Random Forest model is used to predict the values of the validation set (ori
 pred_rf_val <- predict(mod_rf, validation)
 pred_rf_val
 ```
+
+After entering the outcome in the quiz, all the cases were well predicted.
